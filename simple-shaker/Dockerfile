@@ -29,7 +29,6 @@ RUN chmod a+x /usr/local/bin/install-python-packages.sh
 RUN /usr/local/bin/install-python-packages.sh \
      pyshaker \
      openstackclient \
-     git+https://git.openstack.org/openstack/ospurge \
      flent==1.2.2
 
 COPY simple-shaker/*[^install-shaker].sh spot_vm.hot /opt/
