@@ -1,21 +1,37 @@
-FROM bitnami/minideb:jessie
+FROM docker.io/ubuntu:xenial
 
 LABEL maintainer "Oded Le'Sage <ol7435@att.com>"
 
-RUN apt update && install_packages python-dev wget gcc nano less \
-    iproute2 iperf3 iputils-ping bc jq
+RUN set -ex ;\
+    apt-get update ;\
+    apt-get upgrade -y ;\
+    apt-get install -y \
+      wget \
+      nano \
+      less \
+      python \
+      virtualenv \
+      python-dev \
+      gcc \
+      git \
+      openssh-client \
+      iproute2 \
+      iperf3 \
+      iputils-ping \
+      bc \
+      netperf \
+      jq;
 
-RUN wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py
 
-RUN pip install -U pbr setuptools
-RUN pip install pyshaker openstackclient flent==1.2.2
+COPY install-shaker.sh /usr/local/bin/install-python-packages.sh;
+RUN /usr/local/bin/install-python-packages.sh \
+     pyshaker \
+     openstackclient \
+     git+https://git.openstack.org/openstack/ospurge \
+     flent==1.2.2
 
-RUN wget http://ftp.br.debian.org/debian/pool/non-free/n/netperf/netperf_2.6.0-2_amd64.deb && \
-    dpkg -i netperf_2.6.0-2_amd64.deb && apt install -f
-
-COPY *.sh spot_vm.hot /opt/
+COPY *[^install-shaker].sh spot_vm.hot /opt/
 
 WORKDIR /opt
-
+ENV PATH=/var/lib/shaker-venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 CMD ["/opt/shaker_spot.sh","/share/shaker.cfg"]
