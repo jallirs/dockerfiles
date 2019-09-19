@@ -23,7 +23,7 @@ RUN set -ex ;\
       jq;
 
 
-COPY simple-shaker/install-shaker.sh /usr/local/bin/install-python-packages.sh;
+COPY install-shaker.sh /usr/local/bin/install-python-packages.sh
 RUN /usr/local/bin/install-python-packages.sh \
      pyshaker \
      openstackclient \
