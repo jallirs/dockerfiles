@@ -23,14 +23,14 @@ RUN set -ex ;\
       jq;
 
 
-COPY install-shaker.sh /usr/local/bin/install-python-packages.sh;
+COPY simple-shaker/install-shaker.sh /usr/local/bin/install-python-packages.sh;
 RUN /usr/local/bin/install-python-packages.sh \
      pyshaker \
      openstackclient \
      git+https://git.openstack.org/openstack/ospurge \
      flent==1.2.2
 
-COPY *[^install-shaker].sh spot_vm.hot /opt/
+COPY simple-shaker/*[^install-shaker].sh spot_vm.hot /opt/
 
 WORKDIR /opt
 ENV PATH=/var/lib/shaker-venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
