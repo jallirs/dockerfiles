@@ -20,6 +20,7 @@ RUN set -ex ;\
       iputils-ping \
       bc \
       netperf \
+      python3-dev \
       jq;
 
 
