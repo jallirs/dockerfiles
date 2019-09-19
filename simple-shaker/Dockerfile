@@ -24,6 +24,7 @@ RUN set -ex ;\
 
 
 COPY install-shaker.sh /usr/local/bin/install-python-packages.sh
+RUN chmod a+x /usr/local/bin/install-python-packages.sh
 RUN /usr/local/bin/install-python-packages.sh \
      pyshaker \
      openstackclient \
